@@ -4,6 +4,10 @@
 #include <iostream>
 #include <ctime>
 
+#define DATA_DIRECTORY "/home/paul/Documents/autobocce/dataset_1ball/"
+#define CAMERA_NUM 0
+#define USE_CAMERA 0
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -11,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     cam1=new Image();
     //cam2=new Image();
-    cam1->setCameraNum(1);
+    cam1->setCameraNum(CAMERA_NUM);
     //cam2->setCameraNum(2);
     QTimer *qTimer = new QTimer(this);
     connect(qTimer,SIGNAL(timeout()),this,SLOT(displayFrame()));
@@ -27,9 +31,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::displayFrame(){
 
+    if (USE_CAMERA) {
+        cam1->takePicture(ui->bSlider->value()/100.0,ui->wSlider->value()/100.0);
+        //cam2->takePicture();
 
-    cam1->takePicture(ui->bSlider->value()/100.0,ui->wSlider->value()/100.0);
-    //cam2->takePicture();
+    } else {
+        cam1->readFromFile(DATA_DIRECTORY);
+    }
     cam1->processImage();
 
     //cam2->processImage();
@@ -37,7 +45,6 @@ void MainWindow::displayFrame(){
     //cam2->displayImage(*ui->src_b);
     //cam1->processImage(cam2->getSrc());
     cam1->displayImage(*ui->imageout);
-    ;
 }
 
 

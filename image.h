@@ -23,6 +23,7 @@ public:
     void processImage();
     Mat& getSrc();
     Mat& getIm();
+    void readFromFile(String dataDirectory);
     static void invert(Mat& mat);
     static void sobel(Mat& in,Mat& out, int dx, int dy);
     static void sobelh(Mat& in,Mat& out);
@@ -38,6 +39,7 @@ private:
     Mat im;
     VideoCapture cam;
     int ctr=0;
+    int readCount=0;
 };
 
 #endif // IMAGE_H

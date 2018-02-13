@@ -17,6 +17,15 @@ void Image::takePicture(){
     }
 }
 
+void Image::readFromFile(String dataDirectory) {
+    src = imread(dataDirectory + std::to_string(readCount) + ".bmp", IMREAD_COLOR);
+    if (src.empty()) {
+        readCount--;
+        src = imread(dataDirectory + std::to_string(readCount) + ".bmp", IMREAD_COLOR);
+    }
+    readCount++;
+}
+
 void Image::takePicture(double focus,double exposure){
     for(int i=0;i<1;i++){
         cam>>src;
@@ -58,7 +67,8 @@ void Image::processImage(Mat& other){
 void Image::processImage(){
     im=src.clone();
     //printf("hello :)");
-    imwrite("/home/paul/bocce/dataset_game/"+std::to_string(ctr++)+".bmp",im);
+    //Un-comment in order to recollect data.
+    //imwrite("/home/paul/bocce/dataset_game/"+std::to_string(ctr++)+".bmp",im);
 }
 
 void Image::invert(Mat& mat){
