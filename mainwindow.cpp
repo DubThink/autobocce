@@ -43,6 +43,8 @@ void MainWindow::displayFrame(){
     //cam2->displayImage(*ui->src_b);
     //cam1->processImage(cam2->getSrc());
     cam1->displayImage(*ui->imageout);
+
+    // TODO sleep
 }
 
 

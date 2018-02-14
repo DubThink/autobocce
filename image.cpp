@@ -2,7 +2,7 @@
 
 Image::Image()
 {
-
+    blankFrame= Mat();
 }
 
 void Image::setCameraNum(int i){
@@ -65,8 +65,14 @@ void Image::processImage(Mat& other){
 }
 
 void Image::processImage(){
-    im=src.clone();
-    //printf("hello :)");
+    cv::GaussianBlur(src,im,Size(5,5),5);
+    if(blankFrame.empty()){
+        printf("Initing blank frame\n");
+        im.copyTo(blankFrame);
+        //blankFrame*=.5;
+    }
+    im=(blankFrame-im)+(im-blankFrame);
+
     //Un-comment in order to recollect data.
     //imwrite("/home/paul/bocce/dataset_game/"+std::to_string(ctr++)+".bmp",im);
 }

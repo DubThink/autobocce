@@ -37,6 +37,7 @@ private:
     Mat src;
     Mat display;
     Mat im;
+    Mat blankFrame;
     VideoCapture cam;
     int ctr=0;
     int readCount=0;
