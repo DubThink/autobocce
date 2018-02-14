@@ -3,10 +3,8 @@
 #include <chrono>
 #include <iostream>
 #include <ctime>
+#include "constants.h"
 
-#define DATA_DIRECTORY "/home/paul/Documents/autobocce/dataset_1ball/"
-#define CAMERA_NUM 0
-#define USE_CAMERA 0
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
