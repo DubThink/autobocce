@@ -31,6 +31,9 @@ public:
     int bThresh=300;
     void takePicture(double focus,double exposure);
     void decisionFilter(Mat& a, Mat& b);
+    void readFromFile(String dataDirectory);
+    Mat& getIm();
+    void invert(Mat& im);
 
     float thresh1=0, thresh2=0, thresh3=0, thresh4=0;
 private:
