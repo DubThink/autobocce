@@ -22,9 +22,6 @@ public:
     void processImage(Mat& other);
     void processImage();
     Mat& getSrc();
-    Mat& getIm();
-    void readFromFile(String dataDirectory);
-    static void invert(Mat& mat);
     static void sobel(Mat& in,Mat& out, int dx, int dy);
     static void sobelh(Mat& in,Mat& out);
     static void sobelv(Mat& in,Mat& out);
@@ -33,6 +30,9 @@ public:
     int wThresh=30;
     int bThresh=300;
     void takePicture(double focus,double exposure);
+    void decisionFilter(Mat& a, Mat& b);
+
+    float thresh1=0, thresh2=0, thresh3=0, thresh4=0;
 private:
     Mat src;
     Mat display;

@@ -30,7 +30,8 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    image.h
+    image.h \
+    constants.h
 
 FORMS += \
         mainwindow.ui

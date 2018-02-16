@@ -32,4 +32,5 @@
 *.app
 
 
-Headers/constants.h
+constants.h
+bocce.pro.user

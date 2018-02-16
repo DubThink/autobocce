@@ -30,12 +30,14 @@ MainWindow::~MainWindow()
 void MainWindow::displayFrame(){
 
     if (USE_CAMERA) {
-        cam1->takePicture(ui->bSlider->value()/100.0,ui->wSlider->value()/100.0);
+        cam1->takePicture(ui->whiteBal_s->value()/100.0,ui->focus_s->value()/100.0);
         //cam2->takePicture();
 
     } else {
         cam1->readFromFile(DATA_DIRECTORY);
     }
+    cam1->thresh1=ui->thresh1_s->value();
+    cam1->thresh2=ui->thresh2_s->value();
     cam1->processImage();
 
     //cam2->processImage();

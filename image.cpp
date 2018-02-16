@@ -1,4 +1,5 @@
 #include "image.h"
+#include <iostream>
 
 Image::Image()
 {
@@ -34,6 +35,43 @@ void Image::takePicture(double focus,double exposure){
 }
 
 
+inline int dist(Vec3b& a, Vec3b& b){
+    return abs(a[0]-b[0])+abs(a[1]-b[1])+abs(a[2]-b[2]);
+}
+
+void Image::decisionFilter(Mat &a, Mat &b)
+{
+    for (int i = 0; i < a.rows; i++){
+        //printf("I: %d | ",i);
+        Vec3b* pixela = a.ptr<cv::Vec3b>(i); // point to first pixel in row
+        Vec3b* pixelb = b.ptr<cv::Vec3b>(i); // point to first pixel in row
+        for (int j = 0; j < a.cols; j++){
+            //printf("%d,",j);
+            if(dist(*pixela,*pixelb)<thresh1){
+                (*pixela)[1]=0;
+                (*pixela)[2]=0;
+            }
+            // increment pointers
+            pixela++;
+            pixelb++;
+        }
+        //std::cout<<std::endl;
+    }
+//    for(int y=1;y<a.rows-1;y++){
+//        for(int x=0;x<a.cols;x++){
+//            for(int c=0;c<3;c++){
+////                int c1=(int)in.at<Vec3b>(y,x+1)[c];
+////                int c2=(int)in.at<Vec3b>(y,x-1)[c];
+////                char c3=(char)(127+c1-c2);
+//                //printf("Colors %d %d %u, ",c1,c2,c3);
+
+//                a.at<Vec3b>(y,x)[c]=50;
+//            }
+//        }
+//    }
+}
+
+
 QImage Image::convertToQImage(){
     cv::cvtColor(im,display,CV_BGR2RGB);
     //display= im;
@@ -65,14 +103,15 @@ void Image::processImage(Mat& other){
 }
 
 void Image::processImage(){
-    cv::GaussianBlur(src,im,Size(5,5),5);
+    //cv::GaussianBlur(src,im,Size(5,5),5);
+    src.copyTo(im);
     if(blankFrame.empty()){
         printf("Initing blank frame\n");
         im.copyTo(blankFrame);
         //blankFrame*=.5;
     }
-    im=(blankFrame-im)+(im-blankFrame);
-
+    //im=(blankFrame-im)+(im-blankFrame);
+    decisionFilter(im,blankFrame);
     //Un-comment in order to recollect data.
     //imwrite("/home/paul/bocce/dataset_game/"+std::to_string(ctr++)+".bmp",im);
 }
