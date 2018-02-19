@@ -39,6 +39,10 @@ inline int dist(Vec3b& a, Vec3b& b){
     return abs(a[0]-b[0])+abs(a[1]-b[1])+abs(a[2]-b[2]);
 }
 
+inline int chrom(Vec3b& sc){
+    return abs(sc[0]-sc[1])+abs(sc[1]-sc[2])+abs(sc[2]-sc[0]);
+}
+
 void Image::decisionFilter(Mat &a, Mat &b)
 {
     for (int i = 0; i < a.rows; i++){
@@ -47,9 +51,9 @@ void Image::decisionFilter(Mat &a, Mat &b)
         Vec3b* pixelb = b.ptr<cv::Vec3b>(i); // point to first pixel in row
         for (int j = 0; j < a.cols; j++){
             //printf("%d,",j);
-            if(dist(*pixela,*pixelb)<thresh1){
-                (*pixela)[1]=0;
-                (*pixela)[2]=0;
+            if(dist(*pixela,*pixelb)<thresh1){//&&abs(chrom(*pixela)-chrom(*pixelb))<thresh2){
+                (*pixela)[0]=255;
+                (*pixela)[2]=255;
             }
             // increment pointers
             pixela++;
