@@ -6,6 +6,26 @@ Image::Image()
     blankFrame= Mat();
 }
 
+
+int* findClosestBall(int** previous, int numBalls, int* ball) {
+    int closestBall = -1;
+    int minSquareDist = -1;
+    for (int i = 0; i < numBalls; i++) {
+        int squareDistance = (ball[0]-previous[i][0])*(ball[0]-previous[i][0]) + (ball[1]-previous[i][1])*(ball[1]-previous[i][1]);
+        if (minSquareDist == -1 || squareDistance < minSquareDist) {
+            if (squareDistance < 30) {
+                closestBall = i;
+                minSquareDist = squareDistance;
+            }
+        }
+    }
+    if (closestBall != -1) {
+        return previous[closestBall];
+    } else {
+        return nullptr;
+    }
+}
+
 void Image::setCameraNum(int i){
     cam=VideoCapture(i);
     cam.set(CV_CAP_PROP_AUTOFOCUS,0);

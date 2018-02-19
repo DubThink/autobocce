@@ -34,6 +34,7 @@ public:
     void readFromFile(String dataDirectory);
     Mat& getIm();
     void invert(Mat& im);
+    int* findClosestBall(int** previous, int numBalls, int* ball);
 
     float thresh1=0, thresh2=0, thresh3=0, thresh4=0;
 private:
