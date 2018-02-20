@@ -1,4 +1,5 @@
 #include "image.h"
+#include "coord.h"
 #include <iostream>
 
 Image::Image()
@@ -7,11 +8,12 @@ Image::Image()
 }
 
 
-int* findClosestBall(int** previous, int numBalls, int* ball) {
+Coord findClosestBall(Coord* previous, int numBalls, Coord& ball) {
     int closestBall = -1;
     int minSquareDist = -1;
+
     for (int i = 0; i < numBalls; i++) {
-        int squareDistance = (ball[0]-previous[i][0])*(ball[0]-previous[i][0]) + (ball[1]-previous[i][1])*(ball[1]-previous[i][1]);
+        int squareDistance = ball.dist2(previous[i]);
         if (minSquareDist == -1 || squareDistance < minSquareDist) {
             if (squareDistance < 30) {
                 closestBall = i;
@@ -19,10 +21,11 @@ int* findClosestBall(int** previous, int numBalls, int* ball) {
             }
         }
     }
+
     if (closestBall != -1) {
         return previous[closestBall];
     } else {
-        return nullptr;
+        return Coord(-1,-1);
     }
 }
 
