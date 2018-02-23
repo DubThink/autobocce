@@ -25,7 +25,7 @@ Coord findClosestBall(Coord* previous, int numBalls, Coord& ball) {
     if (closestBall != -1) {
         return previous[closestBall];
     } else {
-        return Coord(-1,-1);
+        return Coord(ball.x, ball.y);
     }
 }
 
