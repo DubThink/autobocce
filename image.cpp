@@ -47,16 +47,20 @@ void Image::decisionFilter(Mat &a, Mat &b)
         Vec3b* pixelb = b.ptr<cv::Vec3b>(i); // point to first pixel in row
         for (int j = 0; j < a.cols; j++){
             //printf("%d,",j);
+
             if(dist(*pixela,*pixelb)<thresh1){
+                (*pixela)[0] = 255;
                 (*pixela)[1]=0;
                 (*pixela)[2]=0;
             }
+
             // increment pointers
             pixela++;
             pixelb++;
         }
         //std::cout<<std::endl;
     }
+
 //    for(int y=1;y<a.rows-1;y++){
 //        for(int x=0;x<a.cols;x++){
 //            for(int c=0;c<3;c++){
@@ -69,6 +73,25 @@ void Image::decisionFilter(Mat &a, Mat &b)
 //            }
 //        }
 //    }
+}
+
+void Image::fillFilter(Mat &a, Mat &b){
+    for (int i = 0; i < a.rows; i++){
+        Vec3b* pixela = a.ptr<cv::Vec3b>(i); // point to first pixel in row
+        Vec3b* pixelb = b.ptr<cv::Vec3b>(i); // point to first pixel in row
+        for (int j = 0; j < a.cols; j++){
+            if(dist(*pixelb,*pixela)>50){
+                (*pixela)[0] = 0;
+                (*pixela)[1] = 255;
+                (*pixela)[2] = 255;
+            }
+            // increment pointers
+            pixela++;
+            pixelb++;
+        }
+
+    }
+
 }
 
 
@@ -112,6 +135,7 @@ void Image::processImage(){
     }
     //im=(blankFrame-im)+(im-blankFrame);
     decisionFilter(im,blankFrame);
+    fillFilter(im,blankFrame);
     //Un-comment in order to recollect data.
     //imwrite("/home/paul/bocce/dataset_game/"+std::to_string(ctr++)+".bmp",im);
 }

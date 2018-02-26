@@ -1,7 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#define DATA_DIRECTORY "/home/paul/Documents/autobocce/dataset_1ball/"
+#define DATA_DIRECTORY "/home/paul/Desktop/Comp 490/Tracking/autobocce/dataset_game/"
 #define CAMERA_NUM 0
 #define USE_CAMERA 0
 

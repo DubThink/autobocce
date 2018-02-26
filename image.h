@@ -31,6 +31,7 @@ public:
     int bThresh=300;
     void takePicture(double focus,double exposure);
     void decisionFilter(Mat& a, Mat& b);
+    void fillFilter(Mat& a,Mat& b);
     void readFromFile(String dataDirectory);
     Mat& getIm();
     void invert(Mat& im);
