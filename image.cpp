@@ -1,9 +1,32 @@
 #include "image.h"
+#include "coord.h"
 #include <iostream>
 
 Image::Image()
 {
     blankFrame= Mat();
+}
+
+
+Coord findClosestBall(Coord* previous, int numBalls, Coord& ball) {
+    int closestBall = -1;
+    int minSquareDist = -1;
+
+    for (int i = 0; i < numBalls; i++) {
+        int squareDistance = ball.dist2(previous[i]);
+        if (minSquareDist == -1 || squareDistance < minSquareDist) {
+            if (squareDistance < 30) {
+                closestBall = i;
+                minSquareDist = squareDistance;
+            }
+        }
+    }
+
+    if (closestBall != -1) {
+        return previous[closestBall];
+    } else {
+        return Coord(ball.x, ball.y);
+    }
 }
 
 void Image::setCameraNum(int i){

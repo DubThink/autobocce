@@ -3,6 +3,7 @@
 
 #include <opencv/cv.hpp>
 #include <opencv/highgui.h>
+#include "coord.h"
 
 
 #include <QLabel>
@@ -34,6 +35,7 @@ public:
     void readFromFile(String dataDirectory);
     Mat& getIm();
     void invert(Mat& im);
+    Coord findClosestBall(Coord* previous, int numBalls, Coord& ball);
 
     float thresh1=0, thresh2=0, thresh3=0, thresh4=0;
 private:
